@@ -35,7 +35,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div ref="dropdownRef" class="relative w-72">
+    <div ref="dropdownRef" class="relative w-full min-w-0">
         <button @click.stop="open = !open"
             class="flex w-full items-center justify-between rounded-lg border border-slate-700 bg-slate-800 p-3">
             <div class="flex items-center gap-3">

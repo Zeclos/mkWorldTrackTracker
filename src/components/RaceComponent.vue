@@ -5,6 +5,17 @@ import TrackDropDown from '@/components/TrackDropDown.vue';
 import ConnectionImage from '@/assets/track_images/connecting.png'
 import { tracks } from "@/data/tracks";
 
+const props = defineProps({
+    mode: {
+        type: String,
+        required: true,
+    },
+})
+
+const isWorldwide = computed(() => props.mode === 'worldwide')
+
+const emit = defineEmits(['points-updated'])
+
 const route = useRoute()
 
 const players = Number(route.params.players)
@@ -78,6 +89,9 @@ const points = computed(() => {
     return getPoints(players, placement.value) ?? ''
 })
 
+watch(points, (value) => {
+    emit('points-updated', value === '' ? 0 : Number(value))
+}, { immediate: true })
 
 watch(firstTrack, () => {
     secondTrack.value = noneTrack
@@ -86,19 +100,32 @@ watch(firstTrack, () => {
 </script>
 
 <template>
-    <div class="mt-6 flex w-full items-center justify-center gap-6">
-        <TrackDropDown v-model="firstTrack" :tracks="tracks" />
-        <img :src="ConnectionImage" alt="Connecting tracks" class="h-12 w-12 object-contain" />
-        <TrackDropDown v-model="secondTrack" :tracks="availableConnections" />
+    <div class="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px] items-center gap-4">
+        <div class="min-w-0">
+            <TrackDropDown v-model="firstTrack" :tracks="tracks" />
+        </div>
 
-        <input v-model.number="placement" type="number" min="1" :max="players"
-            class="rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
+        <div class="flex justify-center">
+            <img :src="ConnectionImage" alt="Connecting tracks" class="h-12 w-12 object-contain" />
+        </div>
 
-        <input :value="points" type="number" readonly
-            class="rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none" />
+        <div class="min-w-0">
+            <TrackDropDown v-model="secondTrack" :tracks="availableConnections" />
+        </div>
 
-        <input type="number" min="1" :max="players"
-            class="rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
+        <div class="min-w-0">
+            <input v-model.number="placement" type="number" min="1" :max="players"
+                class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
+        </div>
 
+        <div v-if="!isWorldwide" class="min-w-0">
+            <input :value="points" type="number" readonly
+                class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none" />
+        </div>
+
+        <div class="min-w-0">
+            <input type="number" min="1" :max="players"
+                class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
+        </div>
     </div>
 </template>

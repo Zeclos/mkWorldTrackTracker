@@ -26,7 +26,7 @@ import { RouterLink } from 'vue-router'
           </p>
         </RouterLink>
 
-        <RouterLink to="/worldwide" class="rounded-xl bg-blue-600 p-6 transition hover:bg-blue-700">
+        <RouterLink to="/worldwide/play" class="rounded-xl bg-blue-600 p-6 transition hover:bg-blue-700">
           <h2 class="text-2xl font-semibold">
             WorldWide Session
           </h2>
