@@ -1,9 +1,13 @@
 <script setup>
 import { computed, ref } from 'vue'
 import RaceComponent from '@/components/RaceComponent.vue';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const router = useRouter()
+
+const players = Number(route.params.players)
 
 const props = defineProps({
     mode: {
@@ -16,6 +20,8 @@ const isWorldwide = computed(() => props.mode === 'worldwide')
 
 const races = ref(
     isWorldwide.value ? [{
+        mode: props.mode,
+        playerCount: null,
         firstTrack: null,
         secondTrack: null,
         placement: null,
@@ -23,6 +29,8 @@ const races = ref(
         points: 0,
     }]
         : Array.from({ length: 12 }, () => ({
+            mode: props.mode,
+            playerCount: null,
             firstTrack: null,
             secondTrack: null,
             placement: null,
@@ -38,13 +46,17 @@ function addRace() {
         placement: null,
         startingPosition: null,
         points: 0,
+        playerCount: null,
     })
 }
 
 function updateRace(index, race) {
     races.value[index] = race
-    if (isWorldwide) {
+    races.value[index].mode = props.mode
+    if (isWorldwide.value) {
         races.value[index].points = 0
+    } else {
+        races.value[index].playerCount = players
     }
 }
 
@@ -53,8 +65,20 @@ const totalPoints = computed(() =>
 )
 
 function endSession() {
-    localStorage.setItem('race', JSON.stringify(races.value))
-    console.log(races)
+    const oldSessions = JSON.parse(
+        localStorage.getItem('sessions') || '[]'
+    )
+
+    oldSessions.push({
+        date: new Date().toISOString(),
+        races: races.value
+    })
+
+    localStorage.setItem(
+        'sessions',
+        JSON.stringify(oldSessions)
+    )
+
     router.push({
         name: 'home',
     })
@@ -73,6 +97,8 @@ function endSession() {
                 <div class="flex items-end justify-center">Placement</div>
                 <div v-if="!isWorldwide" class="flex items-end justify-center">Points</div>
                 <div class="flex items-end justify-center">Starting Spot</div>
+                <div v-if="isWorldwide" class="flex items-end justify-center">Player count</div>
+
             </div>
             <div class="flex flex-col gap-4">
                 <RaceComponent v-for="(_, index) in races" :key="index" :mode="props.mode"
