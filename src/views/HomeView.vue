@@ -37,9 +37,9 @@ import { RouterLink } from 'vue-router'
 
         </RouterLink>
 
-        <RouterLink to="/statistics" class="rounded-xl bg-green-600 p-6 transition hover:bg-green-700">
+        <RouterLink to="/stats" class="rounded-xl bg-green-600 p-6 transition hover:bg-green-700">
           <h2 class="text-2xl font-semibold">
-            Statistics
+            Stats
           </h2>
 
           <p class="mt-2">

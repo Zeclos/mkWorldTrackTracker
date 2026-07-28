@@ -14,8 +14,9 @@ const props = defineProps({
 
 const isWorldwide = computed(() => props.mode === 'worldwide')
 
-const emit = defineEmits(['points-updated'])
+const emit = defineEmits(['race-updated'])
 
+const startingPosition = ref(null)
 const route = useRoute()
 
 const players = Number(route.params.players)
@@ -89,9 +90,25 @@ const points = computed(() => {
     return getPoints(players, placement.value) ?? ''
 })
 
-watch(points, (value) => {
-    emit('points-updated', value === '' ? 0 : Number(value))
-}, { immediate: true })
+watch(
+    [
+        firstTrack,
+        secondTrack,
+        placement,
+        startingPosition,
+        points
+    ],
+    () => {
+        emit('race-updated', {
+            firstTrack: firstTrack.value.id,
+            secondTrack: secondTrack.value.id,
+            placement: placement.value,
+            startingPosition: startingPosition.value,
+            points: points.value === '' ? 0 : Number(points.value),
+        })
+    },
+    { immediate: true }
+)
 
 watch(firstTrack, () => {
     secondTrack.value = noneTrack
@@ -124,7 +141,7 @@ watch(firstTrack, () => {
         </div>
 
         <div class="min-w-0">
-            <input type="number" min="1" :max="players"
+            <input v-model.number="startingPosition" type="number" min="1" :max="players"
                 class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
         </div>
     </div>

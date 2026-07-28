@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoungeView from '@/views/LoungeView.vue'
 import PlayView from '@/views/PlayView.vue'
-
+import StatsView from '@/views/StatsView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,6 +31,11 @@ const router = createRouter({
       props: {
         mode: 'worldwide'
       }
+    },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: StatsView
     }
   ],
 })

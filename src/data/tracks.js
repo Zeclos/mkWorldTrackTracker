@@ -32,184 +32,184 @@ import rr from '@/assets/track_images/RR.png'
 
 export const tracks = [
     {
-        id:"MBC",
+        id: 1,
         name: "Mario Bros Circuit",
         image: mbc,
-        connectsTo: ["rWS", "rTF", "rCM", "CC", "WS", "rDH", "rSGB"]
+        connectsTo: [7, 26, 25, 2, 3, 5, 6]
     },
     {
-        id:"CC",
+        id: 2,
         name: "Crown City",
         image: cc,
-        connectsTo: ["rCM", "rMMM", "PS", "FO", "rKTB", "DKS", "WS", "rDH", "MBC", "rWS"]
+        connectsTo: [25, 24, 15, 14, 13, 4, 3, 5, 1, 7]
     },
     {
-        id:"WS",
+        id: 3,
         name: "Whistlestop Summit",
         image: ws,
-        connectsTo: ["rDH", "MBC", "rCM", "CC", "rKTB", "DKS"]
+        connectsTo: [5, 1, 25, 2, 13, 4]
     },
     {
-        id:"DKS",
+        id: 4,
         name: "DK Spaceport",
         image: dks,
-        connectsTo: ["WS", "rDH", "MBC", "CC", "PS", "rKTB"]
+        connectsTo: [3, 5, 1, 2, 15, 13]
     },
     {
-        id:"rDH",
+        id: 5,
         name: "Desert Hills",
         image: rdh,
-        connectsTo: ["rSGB", "MBC", "CC", "rKTB", "WS"]
+        connectsTo: [6, 1, 2, 13, 3]
     },
     {
-        id:"rSGB",
+        id: 6,
         name: "Shy Guy Bazaar",
         image: rsgb,
-        connectsTo: ["rAF", "rWS", "rCM", "rMBC", "rDH"]
+        connectsTo: [8, 7, 25, 1, 5]
     },
     {
-        id:"rWS",
+        id: 7,
         name: "Wario Stadium",
         image: rws,
-        connectsTo: ["BC", "DBB", "rTF", "rCM", "CC", "MBC", "rSGB", "rAF"]
+        connectsTo: [27, 23, 26, 25, 2, 1, 6, 8]
     },
     {
-        id:"rAF",
+        id: 8,
         name: "Airship Fortress",
         image: raf,
-        connectsTo: ["BC", "DBB", "rTF", "rWS", "rSGB"]
+        connectsTo: [27, 23, 26, 7, 6]
     },
     {
-        id:"rDKP",
+        id: 9,
         name: "DK Pass",
         image: rdkp,
-        connectsTo: ["SP", "rSHS", "rWSh", "SSS", "CCF", "rMMM", "DD"]
+        connectsTo: [10, 11, 12, 17, 20, 24, 21]
     },
     {
-        id:"SP",
+        id: 10,
         name: "Starview Peak",
         image: sp,
-        connectsTo: ["rSHS", "rWSh", "rDKP", "CCF", "DD", "rMC", "BCi"]
+        connectsTo: [11, 12, 9, 20, 21, 29, 22]
     },
     {
-        id:"rSHS",
+        id: 11,
         name: "Sky-High Sundae",
         image: rshs,
-        connectsTo: ["rWSh", "SSS", "rDKP", "CCF", "DD", "SP"]
+        connectsTo: [12, 17, 9, 20, 21, 10]
     },
     {
-        id:"rWSh",
+        id: 12,
         name: "Wario Shipyard",
         image: rwsh,
-        connectsTo: ["rPB", "SSS", "CCF", "rDKP", "SP", "rSHS"]
+        connectsTo: [16, 17, 20, 9, 10, 11]
     },
     {
-        id:"rKTB",
+        id: 13,
         name: "Koopa Troope Beach",
         image: rktb,
-        connectsTo: ["DKS", "CC", "PS", "FO", "rDDJ"]
+        connectsTo: [4, 2, 15, 14, 18]
     },
     {
-        id:"FO",
+        id: 14,
         name: "Faraway Oasis",
         image: fo,
-        connectsTo: ["CCF", "SSS", "rPB", "GBR", "rDDJ", "rKTB", "CC", "PS"]
+        connectsTo: [20, 17, 16, 19, 18, 13, 2, 15]
     },
     {
-        id:"PS",
+        id: 15,
         name: "Peach Stadium",
         image: ps,
-        connectsTo: ["rMMM", "CCF", "FO", "rKTB", "CC", "rCM", "rTF", "RR"]
+        connectsTo: [24, 20, 14, 13, 2, 25, 26, 30]
     },
     {
-        id:"rPB",
+        id: 16,
         name: "Peach Beach",
         image: rpb,
-        connectsTo: ["GBR", "rDDJ", "FO", "SSS", "rWSh"]
+        connectsTo: [19, 18, 14, 17, 12]
     },
     {
-        id:"SSS",
+        id: 17,
         name: "Salty Salty Speedway",
         image: sss,
-        connectsTo: ["rDKP", "rWSh", "rPB", "GBR", "rDDj", "FO", "CCF"]
+        connectsTo: [9, 12, 16, 19, 18, 14, 20]
     },
     {
-        id:"rDDJ",
+        id: 18,
         name: "Dino Dino Jungle",
         image: rddj,
-        connectsTo: ["rKTB", "FO", "SSS", "PB", "GBR"]
+        connectsTo: [13, 14, 17, 16, 19]
     },
     {
-        id:"GBR",
+        id: 19,
         name: "Great ? Block Ruins",
         image: gbr,
-        connectsTo: ["rDDJ", "rKTB", "FO", "SSS", "PB"]
+        connectsTo: [18, 13, 14, 17, 16]
     },
     {
-        id:"CCF",
+        id: 20,
         name: "Cheep Cheep Falls",
         image: ccf,
-        connectsTo: ["DD", "SP", "rDKP", "rWSh", "SSS", "FO", "PS", "rCM", "rMMM"]
+        connectsTo: [21, 10, 9, 12, 17, 14, 15, 25, 24]
     },
     {
-        id:"DD",
+        id: 21,
         name: "Dandelion Depths",
         image: dd,
-        connectsTo: ["BCi", "SP", "rSHS", "rDKPS", "CCF", "rMMM", "rTF", "rMC", "AH"]
+        connectsTo: [22, 10, 11, 9, 20, 24, 26, 29, 28]
     },
     {
-        id:"BCi",
+        id: 22,
         name: "Boo Cinema",
         image: bci,
-        connectsTo: ["SP", "DD", "rMC", "DBB", "AH"]
+        connectsTo: [10, 21, 29, 23, 28]
     },
     {
-        id:"DBB",
+        id: 23,
         name: "Dry Bones Burnout",
         image: dbb,
-        connectsTo: ["AH", "BCi", "rMC", "rMMM", "rTF", "rWS", "rAF", "BC"]
+        connectsTo: [28, 22, 29, 24, 26, 7, 8, 27]
     },
     {
-        id:"rMMM",
+        id: 24,
         name: "Moo Moo Meadows",
         image: rmmm,
-        connectsTo: ["rMC", "DD", "rDKP", "CCF", "PS", "CC", "rCM", "rTF", "DBB"]
+        connectsTo: [29, 21, 9, 20, 15, 2, 25, 26, 23]
 
     },
     {
-        id:"rCM",
+        id: 25,
         name: "Choco Mountain",
         image: rcm,
-        connectsTo: ["rTF", "rMMM", "CCF", "PS", "CC", "rWS", "MBC", "rSGB", "rWS", "BC"]
+        connectsTo: [26, 24, 20, 15, 2, 7, 1, 6, 7, 27]
     },
     {
-        id:"rTF",
+        id: 26,
         name: "Toad's Factory",
         image: rtf,
-        connectsTo: ["DBB", "AH", "rMC", "DD", "rMMM", "PS", "rCM", "rMC", "rWS", "rAF", "BC"]
+        connectsTo: [23, 28, 29, 21, 24, 15, 25, 29, 7, 8, 27]
 
     },
     {
-        id:"BC",
+        id: 27,
         name: "Bowser's Castle",
         image: bc,
-        connectsTo: ["DBB", "rMC", "rTF", "rCM", "rWS", "rWS", "rAF"]
+        connectsTo: [23, 29, 26, 25, 7, 7, 8]
     },
     {
-        id:"AH",
+        id: 28,
         name: "Acorn Heights",
         image: ah,
-        connectsTo: ["BCi", "DD", "rMC", "rTF", "DBB"]
+        connectsTo: [22, 21, 29, 26, 23]
 
     },
     {
-        id:"rMC",
+        id: 29,
         name: "Mario Circuit",
         image: rmc,
-        connectsTo: ["AH", "BCi", "SP", "DD", "rMMM", "PS", "rTF", "BC", "DBB"]
+        connectsTo: [28, 22, 10, 21, 24, 15, 26, 27, 23]
     },
     {
-        id:"RR",
+        id: 30,
         name: "Rainbow Road",
         image: rr,
         connectsTo: []

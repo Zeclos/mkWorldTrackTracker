@@ -1,6 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
 import RaceComponent from '@/components/RaceComponent.vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
     mode: {
@@ -11,21 +14,52 @@ const props = defineProps({
 
 const isWorldwide = computed(() => props.mode === 'worldwide')
 
-const racePoints = ref(
-    isWorldwide.value
-        ? [0]
-        : Array.from({ length: 12 }, () => 0)
+const races = ref(
+    isWorldwide.value ? [{
+        firstTrack: null,
+        secondTrack: null,
+        placement: null,
+        startingPosition: null,
+        points: 0,
+    }]
+        : Array.from({ length: 12 }, () => ({
+            firstTrack: null,
+            secondTrack: null,
+            placement: null,
+            startingPosition: null,
+            points: 0,
+        }))
 )
 
 function addRace() {
-    racePoints.value.push(0)
+    races.value.push({
+        firstTrack: null,
+        secondTrack: null,
+        placement: null,
+        startingPosition: null,
+        points: 0,
+    })
 }
 
-function updateRacePoints(index, value) {
-    racePoints.value[index] = value
+function updateRace(index, race) {
+    races.value[index] = race
+    if (isWorldwide) {
+        races.value[index].points = 0
+    }
 }
 
-const totalPoints = computed(() => racePoints.value.reduce((sum, value) => sum + value, 0))
+const totalPoints = computed(() =>
+    races.value.reduce((sum, race) => sum + race.points, 0)
+)
+
+function endSession() {
+    localStorage.setItem('race', JSON.stringify(races.value))
+    console.log(races)
+    router.push({
+        name: 'home',
+    })
+}
+
 </script>
 
 <template>
@@ -41,8 +75,8 @@ const totalPoints = computed(() => racePoints.value.reduce((sum, value) => sum +
                 <div class="flex items-end justify-center">Starting Spot</div>
             </div>
             <div class="flex flex-col gap-4">
-                <RaceComponent v-for="(_, index) in racePoints" :key="index" :mode="props.mode"
-                    @points-updated="updateRacePoints(index, $event)" />
+                <RaceComponent v-for="(_, index) in races" :key="index" :mode="props.mode"
+                    @race-updated="updateRace(index, $event)" />
             </div>
 
             <div v-if="!isWorldwide"
@@ -59,8 +93,8 @@ const totalPoints = computed(() => racePoints.value.reduce((sum, value) => sum +
                 <div class="min-w-0"></div>
             </div>
 
-            <div class="mt-10 w-full max-w-lg rounded-xl bg-slate-800 p-6 shadow-lg space-y-6">
-                <button v-if="isWorldwide" @click="addRace"
+            <div v-if="isWorldwide" class="mt-10 w-full max-w-lg rounded-xl bg-slate-800 p-6 shadow-lg space-y-6">
+                <button @click="addRace"
                     class="w-full rounded-lg bg-blue-600 p-3 font-semibold transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-600">
                     Add Race
                 </button>
