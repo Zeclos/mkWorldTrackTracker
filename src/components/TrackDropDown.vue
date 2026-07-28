@@ -1,7 +1,15 @@
 <script setup>
-import { ref, onMounted, computed, onBeforeUnmount } from "vue";
+import { ref, onMounted, computed, onBeforeUnmount, nextTick } from "vue";
 
 const search = ref("");
+
+const inputRef = ref(null);
+
+async function openDropdown() {
+    open.value = true;
+    await nextTick();
+    inputRef.value?.focus();
+}
 
 const filteredTracks = computed(() => {
     if (!search.value) return props.tracks;
@@ -49,7 +57,7 @@ onBeforeUnmount(() => {
 </script>
 <template>
     <div ref="dropdownRef" class="relative w-full min-w-0">
-        <button v-if="!open" @click.stop="open = true"
+        <button v-if="!open" @click.stop="openDropdown"
             class="flex w-full items-center justify-between rounded-lg border border-slate-700 bg-slate-800 p-3">
             <div class="flex items-center gap-3">
                 <img v-if="modelValue?.image" :src="modelValue.image" :alt="modelValue.name"
@@ -60,7 +68,7 @@ onBeforeUnmount(() => {
             <span>▼</span>
         </button>
 
-        <input v-else v-model="search" autofocus placeholder="Search tracks..."
+        <input ref="inputRef" v-else v-model="search" autofocus placeholder="Search tracks..."
             class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 outline-none" />
 
         <div v-if="open"
