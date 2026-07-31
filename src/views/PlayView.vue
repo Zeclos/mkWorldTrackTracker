@@ -14,9 +14,13 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    format: {
+        type: String,
+        default: '',
+    }
 })
 
-const isWorldwide = computed(() => props.mode === 'worldwide')
+const isWorldwide = computed(() => props.mode === 'Worldwide')
 
 const races = ref(
     isWorldwide.value ? [{
@@ -52,7 +56,6 @@ function addRace() {
 
 function updateRace(index, race) {
     races.value[index] = race
-    races.value[index].mode = props.mode
     if (isWorldwide.value) {
         races.value[index].points = 0
     } else {
@@ -69,8 +72,12 @@ function endSession() {
         localStorage.getItem('sessions') || '[]'
     )
 
+    const format = isWorldwide.value ? 'FFA' : props.format
+
     oldSessions.push({
         date: new Date().toISOString(),
+        mode: props.mode,
+        format: format,
         races: races.value
     })
 

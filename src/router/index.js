@@ -20,16 +20,17 @@ const router = createRouter({
       path: '/lounge/play/:players/:format',
       name: 'lounge_play',
       component: PlayView,
-      props: {
-        mode: 'lounge'
-      }
+      props: route => ({
+        mode: 'Lounge',
+        format: route.params.format,
+      })
     },
     {
       path: '/worldwide/play',
       name: 'worldwide_play',
       component: PlayView,
       props: {
-        mode: 'worldwide'
+        mode: 'Worldwide'
       }
     },
     {

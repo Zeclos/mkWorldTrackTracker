@@ -1,6 +1,15 @@
 <script setup>
 import { ref, onMounted, computed, onBeforeUnmount, nextTick } from "vue";
 
+
+const props = defineProps({
+    tracks: {
+        type: Array,
+        required: true,
+    },
+    modelValue: Object,
+});
+
 const search = ref("");
 
 const inputRef = ref(null);
@@ -19,13 +28,7 @@ const filteredTracks = computed(() => {
     );
 });
 
-const props = defineProps({
-    tracks: {
-        type: Array,
-        required: true,
-    },
-    modelValue: Object,
-});
+
 
 const emit = defineEmits(["update:modelValue"]);
 
