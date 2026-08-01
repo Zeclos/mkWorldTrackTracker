@@ -10,12 +10,6 @@ const sessions = ref(
 
 const sessionMode = ref("All")
 const formatMode = ref("All")
-const statsMode = ref("Track view")
-
-const statOptions = [
-    "Track view",
-    "Route view"
-]
 
 const sessionOptions = [
     "All",
@@ -33,21 +27,6 @@ const formatOptions = [
     '8v8',
     '12v12',
 ]
-
-const noneTrack = {
-    id: null,
-    name: "None",
-    image: null,
-    connectsTo: [],
-}
-
-const firstTrack = ref(tracks[0])
-const secondTrack = ref(noneTrack)
-
-function onTracksUpdated(data) {
-    firstTrack.value = data.firstTrack
-    secondTrack.value = data.secondTrack
-}
 
 const filteredSessions = computed(() => {
     return sessions.value.filter(session => {
@@ -67,12 +46,18 @@ const filteredSessions = computed(() => {
 function getTrackRaces(trackId) {
     return filteredSessions.value
         .flatMap(session => session.races)
-        .filter(race => race.firstTrack === trackId && race.secondTrack == null);
+        .filter(race => race.firstTrack === trackId);
 }
 
 watch(sessionMode, () => {
     formatMode.value = 'All'
 })
+
+function getConnectedTracks(track) {
+    return track.connectsTo
+        .map(id => tracks.find(t => t.id === id))
+        .filter(Boolean)
+}
 
 </script>
 
@@ -108,27 +93,11 @@ watch(sessionMode, () => {
                         </option>
                     </select>
                 </div>
-
-
-                <div>
-                    <label class="mb-2 block text-lg font-semibold">
-                        See stats of
-                    </label>
-
-                    <select v-model="statsMode" class="w-full rounded-lg bg-slate-700 p-3">
-                        <option v-for="option in statOptions" :key="option" :value="option">
-                            {{ option }}
-                        </option>
-                    </select>
-                </div>
-
             </div>
 
             <div class="space-y-6">
-                <TrackCard v-if="statsMode === 'Track view'" v-for="track in tracks" :key="track.id" :track="track"
-                    :races=getTrackRaces(track.id) class="w-300" />
-
-                <TrackComponent v-if="statsMode === 'Route view'" @update="onTracksUpdated" class="col-span-3" />
+                <TrackCard v-for="track in tracks" :key="track.id" :track="track" :races=getTrackRaces(track.id)
+                    :connectedTracks="getConnectedTracks(track)" class="w-300" />
             </div>
 
         </div>
