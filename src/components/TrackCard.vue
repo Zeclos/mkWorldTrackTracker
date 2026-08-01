@@ -32,10 +32,6 @@ const toggleExpanded = () => {
     expanded.value = !expanded.value
 }
 
-const rowStats = {
-
-}
-
 </script>
 
 <template>

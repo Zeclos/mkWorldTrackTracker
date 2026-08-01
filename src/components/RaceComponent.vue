@@ -13,7 +13,7 @@ const props = defineProps({
     },
 })
 
-const isWorldwide = computed(() => props.mode === 'worldwide')
+const isWorldwide = computed(() => props.mode === 'Worldwide')
 
 const emit = defineEmits(['race-updated'])
 
@@ -62,7 +62,7 @@ const points = computed(() => {
         return ''
     }
     return getPoints(players, placement.value) ?? ''
-}) // todo somehow points go in startingspot box in worldwides
+})
 
 watch(
     [
@@ -127,7 +127,6 @@ function onTracksUpdated(data) {
             <input :value="points" type="number" readonly
                 class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none" />
         </div>
-
         <div class="min-w-0">
             <input v-model.number="startingPosition" type="number" min="1" :max="players"
                 class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
@@ -137,6 +136,5 @@ function onTracksUpdated(data) {
             <input v-model.number="playerCount" type="number" min="1" :max="24"
                 class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
         </div>
-
     </div>
 </template>

@@ -28,8 +28,18 @@ const formatOptions = [
     '12v12',
 ]
 
+const playerCountOptions = [
+    "All",
+    12,
+    24
+]
+
+const playerCount = ref("All")
+
 const filteredSessions = computed(() => {
     return sessions.value.filter(session => {
+        let playerCountMatches = true;
+
         const modeMatches =
             sessionMode.value === "All" ||
             session.mode === sessionMode.value;
@@ -39,7 +49,10 @@ const filteredSessions = computed(() => {
             formatMode.value === "All" ||
             session.format === formatMode.value;
 
-        return modeMatches && formatMatches;
+        if (sessionMode.value === "Lounge" && session.mode === "Lounge") {
+            playerCountMatches = session.races[0].playerCount === playerCount.value || playerCount.value === "All"
+        }
+        return modeMatches && formatMatches && playerCountMatches;
     });
 });
 
@@ -58,6 +71,28 @@ function getConnectedTracks(track) {
         .map(id => tracks.find(t => t.id === id))
         .filter(Boolean)
 }
+
+const filteredRaces = computed(() => {
+    return filteredSessions.value.flatMap(session => session.races)
+})
+
+const averagePlacement = computed(() => {
+    if (!filteredRaces.value.length) {
+        return 0;
+    }
+
+    const total = filteredRaces.value.reduce((sum, race) => sum + race.placement, 0)
+    return (total / filteredRaces.value.length).toFixed(2)
+})
+
+const averagePoints = computed(() => {
+    if (!filteredRaces.value.length) {
+        return 0;
+    }
+
+    const total = filteredRaces.value.reduce((sum, race) => sum + race.points, 0)
+    return (total / filteredRaces.value.length).toFixed(2)
+})
 
 </script>
 
@@ -83,17 +118,40 @@ function getConnectedTracks(track) {
                 </div>
 
                 <div v-if="sessionMode === 'Lounge'">
-                    <label class="mb-2 block text-lg font-semibold">
-                        Format
-                    </label>
+                    <div class="space-y-6">
+                        <label class="mb-2 block text-lg font-semibold">
+                            Format
+                        </label>
 
-                    <select v-model="formatMode" class="w-full rounded-xl bg-slate-700 p-3">
-                        <option v-for="option in formatOptions" :key="option" :value="option">
-                            {{ option }}
-                        </option>
-                    </select>
+                        <select v-model="formatMode" class="w-full rounded-xl bg-slate-700 p-3">
+                            <option v-for="option in formatOptions" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                        <label class="mb-2 block text-lg font-semibold">
+                            Player Count
+                        </label>
+
+                        <select v-model="playerCount" class="w-full rounded-xl bg-slate-700 p-3">
+                            <option v-for="option in playerCountOptions" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
+            <div>
+                <div>
+                    <p>Total races: {{ filteredRaces.length }}</p>
+                    <p>Average placement: {{ averagePlacement }}</p>
+                    <p>Average points: {{ averagePoints }}</p>
+                </div>
+            </div>
+            <h1 v-if="sessionMode === 'Lounge'" class="text-5xl font-bold">
+                Total Stats:
+
+            </h1>
+
 
             <div class="space-y-6">
                 <TrackCard v-for="track in tracks" :key="track.id" :track="track" :races=getTrackRaces(track.id)
