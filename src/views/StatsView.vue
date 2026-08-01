@@ -140,6 +140,10 @@ const averagePoints = computed(() => {
                     </div>
                 </div>
             </div>
+            <h1 class="text-5xl font-bold">
+                Total Stats:
+
+            </h1>
             <div>
                 <div>
                     <p>Total races: {{ filteredRaces.length }}</p>
@@ -147,10 +151,7 @@ const averagePoints = computed(() => {
                     <p>Average points: {{ averagePoints }}</p>
                 </div>
             </div>
-            <h1 v-if="sessionMode === 'Lounge'" class="text-5xl font-bold">
-                Total Stats:
 
-            </h1>
 
 
             <div class="space-y-6">
