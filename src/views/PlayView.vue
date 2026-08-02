@@ -109,6 +109,7 @@ function endSession() {
             </div>
             <div class="flex flex-col gap-4">
                 <RaceComponent v-for="(_, index) in races" :key="index" :mode="props.mode"
+                    :initial-starting-position="index > 0 ? races[index - 1]?.placement ?? null : null"
                     @race-updated="updateRace(index, $event)" />
             </div>
 

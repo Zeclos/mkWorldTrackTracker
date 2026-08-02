@@ -1,8 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { ref, computed, watch } from 'vue'
-import TrackDropDown from '@/components/TrackDropDown.vue';
-import ConnectionImage from '@/assets/track_images/connecting.png'
 import { tracks } from "@/data/tracks";
 import TrackComponent from '@/components/TrackComponent.vue'
 
@@ -11,13 +9,19 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    initialStartingPosition: {
+        type: Number,
+        default: null,
+    },
 })
 
 const isWorldwide = computed(() => props.mode === 'Worldwide')
 
-const emit = defineEmits(['race-updated'])
+const emit = defineEmits([
+    'race-updated',
+])
 
-const startingPosition = ref(null)
+const startingPosition = ref(props.initialStartingPosition ?? null)
 
 const playerCount = ref(null)
 
@@ -88,6 +92,10 @@ watch(
 
 watch(firstTrack, () => {
     secondTrack.value = noneTrack
+})
+
+watch(() => props.initialStartingPosition, (value) => {
+    startingPosition.value = value ?? null
 })
 
 function clamp(value, min, max) {
