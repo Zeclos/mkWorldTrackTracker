@@ -22,8 +22,11 @@ const props = defineProps({
 
 const isWorldwide = computed(() => props.mode === 'Worldwide')
 
-const races = ref(
-    isWorldwide.value ? [{
+let nextId = 0
+
+function createRace() {
+    return {
+        id: nextId++,
         mode: props.mode,
         playerCount: null,
         firstTrack: null,
@@ -31,31 +34,21 @@ const races = ref(
         placement: null,
         startingPosition: null,
         points: 0,
-    }]
-        : Array.from({ length: 12 }, () => ({
-            mode: props.mode,
-            playerCount: null,
-            firstTrack: null,
-            secondTrack: null,
-            placement: null,
-            startingPosition: null,
-            points: 0,
-        }))
+    }
+}
+
+const races = ref(
+    isWorldwide.value
+        ? [createRace()]
+        : Array.from({ length: 12 }, createRace)
 )
 
 function addRace() {
-    races.value.push({
-        firstTrack: null,
-        secondTrack: null,
-        placement: null,
-        startingPosition: null,
-        points: 0,
-        playerCount: null,
-    })
+    races.value.push(createRace())
 }
 
 function updateRace(index, race) {
-    races.value[index] = race
+    Object.assign(races.value[index], race)
     if (isWorldwide.value) {
         races.value[index].points = 0
     } else {
@@ -77,8 +70,8 @@ function endSession() {
     oldSessions.push({
         date: new Date().toISOString(),
         mode: props.mode,
-        format: format,
-        races: races.value
+        format,
+        races: races.value.map(({ id, ...race }) => race)
     })
 
     localStorage.setItem(
@@ -91,13 +84,17 @@ function endSession() {
     })
 }
 
+function deleteRace(index) {
+    console.log(races.value)
+    races.value.splice(index, 1)
+}
 </script>
 
 <template>
     <main class="min-h-screen bg-slate-900 text-white">
         <div class="mx-auto flex w-full max-w-6xl flex-col px-6 py-16">
             <div
-                class="mb-4 grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px] gap-4 text-center text-sm font-medium text-slate-300">
+                class="mb-4 grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px_60px] gap-4 text-center text-sm font-medium text-slate-300">
                 <div class="flex items-end justify-center">Track</div>
                 <div class="w-12"></div>
                 <div class="flex items-end justify-center">Connects to Track</div>
@@ -105,16 +102,17 @@ function endSession() {
                 <div v-if="!isWorldwide" class="flex items-end justify-center">Points</div>
                 <div class="flex items-end justify-center">Starting Spot</div>
                 <div v-if="isWorldwide" class="flex items-end justify-center">Player count</div>
+                <div class="flex items-end justify-center">Delete</div>
 
             </div>
             <div class="flex flex-col gap-4">
-                <RaceComponent v-for="(_, index) in races" :key="index" :mode="props.mode"
+                <RaceComponent v-for="(race, index) in races" :key="race.id" :mode="props.mode"
                     :initial-starting-position="index > 0 ? races[index - 1]?.placement ?? null : null"
-                    @race-updated="updateRace(index, $event)" />
+                    @race-updated="updateRace(index, $event)" @race-deleted="deleteRace(index)" />
             </div>
 
             <div v-if="!isWorldwide"
-                class="mt-4 grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px] items-center gap-4">
+                class="mt-4 grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px_60px] items-center gap-4">
                 <div class="min-w-0"></div>
                 <div class="flex justify-center"></div>
                 <div class="min-w-0"></div>

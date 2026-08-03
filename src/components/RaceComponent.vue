@@ -19,6 +19,7 @@ const isWorldwide = computed(() => props.mode === 'Worldwide')
 
 const emit = defineEmits([
     'race-updated',
+    'race-deleted'
 ])
 
 const startingPosition = ref(props.initialStartingPosition ?? null)
@@ -123,7 +124,7 @@ function onTracksUpdated(data) {
 </script>
 
 <template>
-    <div class="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px] items-center gap-4">
+    <div class="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_120px_120px_120px_60px] items-center gap-4">
         <TrackComponent @update="onTracksUpdated" class="col-span-3" />
 
         <div class="min-w-0">
@@ -144,5 +145,9 @@ function onTracksUpdated(data) {
             <input v-model.number="playerCount" type="number" min="1" :max="24"
                 class="w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none focus:border-slate-500" />
         </div>
+        <button @click="$emit('race-deleted')"
+            class="h-12 w-12 rounded-lg bg-red-600 text-white transition hover:bg-red-700">
+            ✕
+        </button>
     </div>
 </template>
