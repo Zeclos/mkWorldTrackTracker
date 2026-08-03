@@ -27,7 +27,6 @@ let nextId = 0
 function createRace() {
     return {
         id: nextId++,
-        mode: props.mode,
         playerCount: null,
         firstTrack: null,
         secondTrack: null,
