@@ -6,7 +6,7 @@ const router = useRouter()
 
 const playerCount = ref('12')
 const format = ref('FFA')
-
+const sq = ref('No')
 const formats = [
     'FFA',
     '2v2',
@@ -15,6 +15,11 @@ const formats = [
     '6v6',
     '8v8',
     '12v12',
+]
+
+const SquadQueueOptions = [
+    "Yes",
+    "No"
 ]
 
 function continueToLounge() {
@@ -27,6 +32,7 @@ function continueToLounge() {
         params: {
             players: playerCount.value,
             format: format.value,
+            sq: sq.value === 'Yes' ? 1 : 0,
         },
     })
 }
@@ -55,6 +61,18 @@ function continueToLounge() {
 
                 <select v-model="format" class="w-full rounded-lg bg-slate-700 p-3">
                     <option v-for="option in formats" :key="option" :value="option">
+                        {{ option }}
+                    </option>
+                </select>
+
+            </div>
+            <div>
+                <label class="mb-2 block text-lg font-semibold">
+                    Squad Queue?
+                </label>
+
+                <select v-model="sq" class="w-full rounded-lg bg-slate-700 p-3">
+                    <option v-for="option in SquadQueueOptions" :key="option" :value="option">
                         {{ option }}
                     </option>
                 </select>

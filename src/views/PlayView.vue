@@ -17,6 +17,10 @@ const props = defineProps({
     format: {
         type: String,
         default: '',
+    },
+    sq: {
+        type: Number,
+        default: 0,
     }
 })
 
@@ -70,6 +74,7 @@ function endSession() {
         date: new Date().toISOString(),
         mode: props.mode,
         format,
+        sq: props.sq === 1 ? true : false,
         races: races.value.map(({ id, ...race }) => race)
     })
 

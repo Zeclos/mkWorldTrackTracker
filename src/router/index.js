@@ -17,12 +17,13 @@ const router = createRouter({
       component: LoungeView,
     },
     {
-      path: '/lounge/play/:players/:format',
+      path: '/lounge/play/:players/:format/:sq',
       name: 'lounge_play',
       component: PlayView,
       props: route => ({
         mode: 'Lounge',
         format: route.params.format,
+        sq: route.params.sq
       })
     },
     {
