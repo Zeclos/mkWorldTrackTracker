@@ -28,6 +28,16 @@ import bc from '@/assets/track_images/BC.png'
 import ah from '@/assets/track_images/AH.png'
 import rmc from '@/assets/track_images/rMC.png'
 import rr from '@/assets/track_images/RR.png'
+import rmc1 from '@/assets/track_images/rMC1.png'
+import rmc2 from '@/assets/track_images/rMC2.png'
+import rmc3 from '@/assets/track_images/rMC3.png'
+import rgv1 from '@/assets/track_images/rGV1.png'
+import rgv2 from '@/assets/track_images/rGV2.png'
+import rgv3 from '@/assets/track_images/rGV3.png'
+import rkb1 from '@/assets/track_images/rKB1.png'
+import rci1 from '@/assets/track_images/rCI1.png'
+import rci2 from '@/assets/track_images/rCI2.png'
+import rvl1 from '@/assets/track_images/rVL1.png'
 
 
 export const tracks = [
@@ -212,6 +222,66 @@ export const tracks = [
         id: 30,
         name: "Rainbow Road",
         image: rr,
+        connectsTo: []
+    },
+    {
+        id: 31,
+        name: "SNES Mario Circuit 1",
+        image: rmc1,
+        connectsTo: []
+    },
+    {
+        id: 32,
+        name: "SNES Mario Circuit 2",
+        image: rmc2,
+        connectsTo: []
+    },
+    {
+        id: 33,
+        name: "SNES Mario Circuit 3",
+        image: rmc3,
+        connectsTo: []
+    },
+    {
+        id: 34,
+        name: "SNES Ghost Valley 1",
+        image: rgv1,
+        connectsTo: []
+    },
+    {
+        id: 35,
+        name: "SNES Ghost Valley 2",
+        image: rgv2,
+        connectsTo: []
+    },
+    {
+        id: 36,
+        name: "SNES Ghost Valley 3",
+        image: rgv3,
+        connectsTo: []
+    },
+    {
+        id: 37,
+        name: "SNES Koopa Beach 1",
+        image: rkb1,
+        connectsTo: []
+    },
+    {
+        id: 38,
+        name: "SNES Choco Island 1",
+        image: rci1,
+        connectsTo: []
+    },
+    {
+        id: 39,
+        name: "SNES Choco Island 2",
+        image: rci2,
+        connectsTo: []
+    },
+    {
+        id: 40,
+        name: "SNES Vanilla Lake 1",
+        image: rvl1,
         connectsTo: []
     },
 ]
